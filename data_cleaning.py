@@ -10,7 +10,7 @@ import IPython
 df = pd.read_csv("Tornadoes_SPC_1950to2015.csv")
 
 # create location column
-df['location'] = df[['slat', 'slon']].apply(tuple, axis=1)
+df['location'] = df[['slat', 'slon']].apply(list, axis=1)
 
 # Filter data to years 2010 and newer
 new_df = df.loc[df.yr >= 2010, :]
@@ -74,6 +74,7 @@ data = {'StName':['Alabama',
 'Oklahoma',
 'Oregon',
 'Pennsylvania',
+'Puerto Rico',
 'Rhode Island',
 'South Carolina',
 'South Dakota',
@@ -159,3 +160,8 @@ geojson = df_to_geojson(df3, cols)
 IPython.display.display({'application/geo+json': geojson}, raw=True)
 
 # Note - final variable name to import is "geojson"
+
+# Output geojson file
+output_filename = 'geojson.json'
+with open(output_filename, 'w') as file:
+    file.write(json.dumps(geojson))
