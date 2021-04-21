@@ -10,7 +10,7 @@ import IPython
 def clean():
 
     # read csv data and convert to pandas dataframe
-    df = pd.read_csv("Tornadoes_SPC_1950to2015.csv")
+    df = pd.read_csv("data/Tornadoes_SPC_1950to2015.csv")
 
     # create location column
     df['location'] = df[['slat', 'slon']].apply(list, axis=1)
