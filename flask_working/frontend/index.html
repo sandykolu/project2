@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Tornados</title>
+  <title>Tornadoes</title>
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -19,19 +19,46 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
   <!-- Our CSS -->
-  <!--<link rel="stylesheet" type="text/css" href="static/css/style.css">-->
+  <link rel="stylesheet" type="text/css" href="static/css/landing-style.css">
 </head>
 
 <body>
 
-  <!-- The div that holds our map -->
-  <a href="map.html">
-    <div id="map"> Map Image</div>
-  </a>
   
+    <div class="row">
+      <div class="col-md-12 jumbotron text-center" style="background-color:#FFFFE0">
+        <div class="container">
+          <h1>Tornadoes Dashboard</h1>
+          <p><strong>Exploration of U.S. Tornadoes from 2010 to 2015</strong></p>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+    <div class="row">
+      <div class="col-md-6 text-center">
+        <p></p>
+        <p><strong>Click Image for Interactive Map</strong></p>
+      <!-- The div that holds our map -->
+        <a href="map.html">
+          <img id="map-image" src="static/images/map-example.png" alt="Map Image">
+        </a>
+        <!--<div id="map"> Map Image</div> -->
+        </a>
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="col-md-6">
   <!-- div for bar chart -->
-  <div id="bar"></div>
+        <div id="bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer-->
+  <div id="footer">
+    <p>Ajinkya Bhosle, Sandeep Kolwalkar, Brie Pfisterer, and Ryan Strong &copy;2021</p>
+  </div>
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
@@ -43,7 +70,7 @@
   <!-- API key -->
   <!-- <script type="text/javascript" src="static/js/config.js"></script> -->
   <!-- Our JavaScript -->
-  <script type="text/javascript" src="static/index.js"></script>
+  <script type="text/javascript" src="static/js/index.js"></script>
 </body>
 
 </html>
