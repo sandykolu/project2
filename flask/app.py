@@ -22,7 +22,7 @@ CORS(app)
 # Database Setup
 #################################################
 
-mongo = PyMongo(app, uri="mongodb://localhost:27017/Tornados")
+mongo = PyMongo(app, uri="mongodb://localhost:27017/geojson")
 
 #################################################
 # Flask Routes
@@ -32,11 +32,32 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/Tornados")
 def index():
     return render_template("index.html")
 
+@app.route("/api/mongo")
+def mongo_data():
+    data = mongo.db.geojson.find()
+    geo = {
+    "type":"FeatureCollection",
+        "features": []
+    }
+    for d in data:
+        geo["features"].append({
+            "type": d["type"],
+            "geometry": d["geometry"],
+            "properties": d["properties"]
+        })
+    print(geo)
+
 @app.route("/api/clean")
 def clean():
     geojson = data_cleaning.clean()
     return geojson
 
+@app.route("/api/top10")
+def top10():
+    top10 = {}
+    top10 = data_cleaning.top10()
+    print(top10)
+    return top10
 
 # To run applicaton
 
