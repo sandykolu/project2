@@ -1,5 +1,5 @@
 #################################################
-# Tornados - Project 2
+# Tornadoes - Project 2
 #################################################
 
 # Dependencies
@@ -55,7 +55,6 @@ def mongo_data():
             "properties": d["properties"]
         })
     
-    print (geo)
     return geo
 
 @app.route("/api/top10")
