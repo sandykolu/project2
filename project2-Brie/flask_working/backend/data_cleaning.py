@@ -8,8 +8,9 @@ import IPython
 from flask import jsonify
 
 ###################################
-# function to return top 10 states based on causalty (fatality + injury)
-def top10():
+
+# function to clean csv and convert to dataframe
+def clean():
     # import csv data and convert to dataframe df
     df = pd.read_csv("data/Tornadoes_SPC_1950to2015.csv")
     # Filter data to years 2010 and newer
@@ -116,7 +117,12 @@ def top10():
     # reset index
     df3.reset_index(inplace = True, drop = True)
 
-    # GROUP BY STEPS
+    return df3
+
+
+# function to return top 10 states based on causalty (fatality + injury)
+def top10():
+    df3 = clean()
     # group by state name
     df_groups = df3.groupby(['StName']).sum()
     # drop columns
