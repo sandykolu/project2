@@ -184,7 +184,7 @@ def date_loss():
         "y": loss,
         "line": {
             "color": 'rgba(255,153,51,0.6)',
-            "width": 5
+            "width": 3
         },
         "type": "line"
     }])
