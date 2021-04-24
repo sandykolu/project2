@@ -2,8 +2,6 @@
 
 # Dependencies
 import pandas as pd
-import json
-import sys
 import IPython
 from flask import jsonify
 
@@ -119,9 +117,9 @@ def clean():
 
     return df3
 
-
 # function to return top 10 states based on causalty (fatality + injury)
 def top10():
+    # # run clean function
     df3 = clean()
     # group by state name
     df_groups = df3.groupby(['StName']).sum()
@@ -144,9 +142,6 @@ def top10():
     states = df_10_states["StName"].tolist()
     casualty = df_10_states["casualty"].tolist()
 
-    #fatality = df_10_states["fat"].tolist()
-    #injury = df_10_states["inj"].tolist()
-
     return jsonify([{
         "x": states,
         "y": casualty,
@@ -156,4 +151,40 @@ def top10():
         "text": casualty,
         "textposition": "auto",
         "type": "bar"
+    }])
+
+# Function to return dates and financial loss values
+def date_loss():
+    # # run clean function
+    df3 = clean()
+    # convert date to datetime
+    df3["date"] = pd.to_datetime(df3["date"], format="%m/%d/%Y")
+    # extract month and year from date
+    df3['month_year'] = df3['date'].dt.to_period('M')
+    # group by date
+    df_date_groups = df3.groupby(['month_year']).sum()
+    # drop all columns except date and loss
+    df_date_groups = df_date_groups.drop(columns=['yr','mag','inj','fat', 'closs', 'len', 'wid', 'slat', 'slon'])
+    # change value of loss to millions
+    df_date_groups["loss"] = df_date_groups["loss"] * 1000000
+    # convert to int to drop decimals
+    df_date_groups["loss"] = df_date_groups["loss"].astype(int)
+    # reset index
+    df_date_groups.reset_index(inplace = True, drop = False)
+    # sort by period
+    df_date_groups = df_date_groups.sort_values(by="month_year", ascending=True)
+    # convert period to string
+    df_date_groups["month_year"] = df_date_groups["month_year"].astype(str)
+    # convert to lists
+    dates = df_date_groups["month_year"].tolist()
+    loss = df_date_groups["loss"].tolist()
+
+    return jsonify([{
+        "x": dates,
+        "y": loss,
+        "line": {
+            "color": 'rgba(255,153,51,0.6)',
+            "width": 5
+        },
+        "type": "line"
     }])
