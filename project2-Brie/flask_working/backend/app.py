@@ -4,10 +4,9 @@
 
 # Dependencies
 
-from flask import Flask, render_template, jsonify, redirect, request
+from flask import Flask, jsonify
 from flask_pymongo import PyMongo
 from flask_cors import CORS
-import json
 from pymongo import MongoClient
 import pandas as pd
 
@@ -25,7 +24,6 @@ CORS(app)
 # Database Setup
 #################################################
 
-# mongo = PyMongo(app, uri="mongodb://localhost:27017/geojson")
 conn = "mongodb://localhost:27017"
 client = MongoClient(conn)
 
@@ -33,6 +31,7 @@ client = MongoClient(conn)
 # Flask Routes
 #################################################
 
+# loads data from file into mongo db and returns geojson
 @app.route("/api/mongo")
 def mongo_data():
     db = client.geoDB 
@@ -54,15 +53,21 @@ def mongo_data():
             "geometry": d["geometry"],
             "properties": d["properties"]
         })
-    
     return geo
 
+# reads data from csv and returns top 10 states by causalty
 @app.route("/api/top10")
 def top10():
     top10 = {}
     top10 = data_cleaning.top10()
-    print(top10)
     return top10
+
+# reads data from csv and returns month_year totals for financial loss
+@app.route("/api/date_loss")
+def date_loss():
+    date_loss = {}
+    date_loss = data_cleaning.date_loss()
+    return date_loss
 
 # To run applicaton
 
